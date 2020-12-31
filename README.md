@@ -1,16 +1,16 @@
 # [Tiny API](https://tiny-api.dev) - A Tiny API To Make Tiny APIs
 ![Website Preview](https://github.com/cameronhh/tiny-api/blob/master/.github/repo-image.png)
 
-- *Quickly prototyping some front-end code and need a couple of endpoints to return some JSON?*
-- *Perhaps you're integrating front-end with a back-end that does have a test server?*
+- *Quickly prototyping some front-end code and need a couple of endpoints to return some static JSON?*
+- *Perhaps you're integrating a front-end with a back-end that doesn't have a test server?*
 - ***Make an endpoint that returns static JSON in seconds with [Tiny API](https://tiny-api.dev)***
 
 
-This repo is the server behind [tiny-api.dev](https://tiny-api.dev). The Tiny API Serve is a REST API written in Go using [Gin](https://github.com/gin-gonic/gin).
+This repo is the server behind [tiny-api.dev](https://tiny-api.dev). The Tiny API Server is a REST API written in Go using [Gin](https://github.com/gin-gonic/gin).
 
 ## Setting up the development environment
 
-### Start the test database
+### 1. Start the test database
 
 Tiny API is built on top of Postgres (I know, SQLite would have been tinier).
 You can quickly run a test database with docker using the following command.
@@ -24,7 +24,7 @@ docker run -d -p 5432:5432 \
 postgres
 ```
 
-### Set Environment Variables
+### 2. Set Environment Variables
 
 Running the server requires the following environment variables to be set:
 
@@ -43,7 +43,7 @@ To simplify things, create a `.env` and then run:
 export $(cat .env | xargs)
 ```
 
-### Run the tests
+### 3. Run the tests
 
 Running the tests will populate the test database with tables if they don't already exist.
 The tests can be run with:
@@ -52,7 +52,7 @@ The tests can be run with:
 go test
 ```
 
-### Run the server
+### 4. Run the server
 
 To run the server, run:
 
