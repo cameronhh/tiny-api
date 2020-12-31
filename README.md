@@ -2,7 +2,7 @@
 Quickly prototyping some front-end code and need a couple of endpoints to return some JSON? Perhaps you're integrating front-end with a back-end that does have a test server? Make an endpoint that returns static JSON in seconds with [Tiny API](https://tiny-api.dev).
 
 
-Tiny API is a REST API Server written in Go. Tiny API can be used to make Tiny APIs. This repo is the server behind [tiny-api.dev](https://tiny-api.dev).
+This repo is the server behind [tiny-api.dev](https://tiny-api.dev). The Tiny API Serve is a REST API written in Go using [Gin](https://github.com/gin-gonic/gin).
 
 ## Setting up the development environment
 
