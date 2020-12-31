@@ -1,5 +1,9 @@
 # [Tiny API](https://tiny-api.dev) - A Tiny API To Make Tiny APIs
-Quickly prototyping some front-end code and need a couple of endpoints to return some JSON? Perhaps you're integrating front-end with a back-end that does have a test server? Make an endpoint that returns static JSON in seconds with [Tiny API](https://tiny-api.dev).
+![Website Preview](https://github.com/cameronhh/tiny-api/blob/master/.github/repo-image.png)
+
+- *Quickly prototyping some front-end code and need a couple of endpoints to return some JSON?*
+- *Perhaps you're integrating front-end with a back-end that does have a test server?*
+- ***Make an endpoint that returns static JSON in seconds with [Tiny API](https://tiny-api.dev)***
 
 
 This repo is the server behind [tiny-api.dev](https://tiny-api.dev). The Tiny API Serve is a REST API written in Go using [Gin](https://github.com/gin-gonic/gin).
