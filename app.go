@@ -136,7 +136,7 @@ func (a *App) getClientContent(c *gin.Context) {
 func (a *App) initializeRoutes() {
 	if os.Getenv("ENVIRONMENT") == "development" {
 		a.Router.Use(cors.New(cors.Config{
-			AllowOrigins:     []string{"os.Getenv(\"CLIENT_URL\")"},
+			AllowOrigins:     []string{os.Getenv("CLIENT_URL")},
 			AllowCredentials: true,
 			AllowMethods:     []string{"PUT", "PATCH", "GET", "DELETE"},
 			AllowHeaders:     []string{"Origin", "content-type"}}))
