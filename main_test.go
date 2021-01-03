@@ -50,7 +50,7 @@ const tableCreationQuery = `CREATE TABLE IF NOT EXISTS endpoints
 func TestEmptyTable(t *testing.T) {
 	clearTable()
 
-	req, _ := http.NewRequest("GET", "/api/endpoints", nil)
+	req, _ := http.NewRequest("GET", "/endpoints", nil)
 	response := executeRequest(req)
 
 	checkResponseCode(t, http.StatusOK, response.Code)
@@ -76,7 +76,7 @@ func checkResponseCode(t *testing.T, expected, actual int) {
 func TestGetNonExistentEndpoint(t *testing.T) {
 	clearTable()
 
-	req, _ := http.NewRequest("GET", "/api/endpoint/11", nil)
+	req, _ := http.NewRequest("GET", "/endpoint/11", nil)
 	response := executeRequest(req)
 
 	checkResponseCode(t, http.StatusNotFound, response.Code)
@@ -86,7 +86,7 @@ func TestCreateEndpoint(t *testing.T) {
 	clearTable()
 
 	var jsonStr = []byte(`{"url":"testendpoint", "content": "{}"}`)
-	req, _ := http.NewRequest("POST", "/api/endpoint", bytes.NewBuffer(jsonStr))
+	req, _ := http.NewRequest("POST", "/endpoint", bytes.NewBuffer(jsonStr))
 	req.Header.Set("Content-Type", "application/json")
 
 	response := executeRequest(req)
@@ -114,7 +114,7 @@ func TestGetEndpoint(t *testing.T) {
 	clearTable()
 	addEndpoints(1)
 
-	req, _ := http.NewRequest("GET", "/api/endpoint/1", nil)
+	req, _ := http.NewRequest("GET", "/endpoint/1", nil)
 	response := executeRequest(req)
 
 	checkResponseCode(t, http.StatusOK, response.Code)
@@ -137,13 +137,13 @@ func TestUpdateEndpoint(t *testing.T) {
 	clearTable()
 	addEndpoints(1)
 
-	req, _ := http.NewRequest("GET", "/api/endpoint/1", nil)
+	req, _ := http.NewRequest("GET", "/endpoint/1", nil)
 	response := executeRequest(req)
 	var originalEndpoint map[string]interface{}
 	json.Unmarshal(response.Body.Bytes(), &originalEndpoint)
 
 	var jsonStr = []byte(`{"url":"endpoint-updated", "content": "{}"}`)
-	req, _ = http.NewRequest("PUT", "/api/endpoint/1", bytes.NewBuffer(jsonStr))
+	req, _ = http.NewRequest("PUT", "/endpoint/1", bytes.NewBuffer(jsonStr))
 	req.Header.Set("Content-Type", "application/json")
 
 	response = executeRequest(req)
@@ -170,16 +170,16 @@ func TestDeleteEndpoint(t *testing.T) {
 	clearTable()
 	addEndpoints(1)
 
-	req, _ := http.NewRequest("GET", "/api/endpoint/1", nil)
+	req, _ := http.NewRequest("GET", "/endpoint/1", nil)
 	response := executeRequest(req)
 	checkResponseCode(t, http.StatusOK, response.Code)
 
-	req, _ = http.NewRequest("DELETE", "/api/endpoint/1", nil)
+	req, _ = http.NewRequest("DELETE", "/endpoint/1", nil)
 	response = executeRequest(req)
 
 	checkResponseCode(t, http.StatusOK, response.Code)
 
-	req, _ = http.NewRequest("GET", "/api/endpoint/1", nil)
+	req, _ = http.NewRequest("GET", "/endpoint/1", nil)
 	response = executeRequest(req)
 	checkResponseCode(t, http.StatusNotFound, response.Code)
 }
