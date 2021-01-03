@@ -134,28 +134,19 @@ func (a *App) getClientContent(c *gin.Context) {
 }
 
 func (a *App) initializeRoutes() {
-	if os.Getenv("ENVIRONMENT") == "development" {
-		a.Router.Use(cors.New(cors.Config{
-			AllowOrigins:     []string{os.Getenv("CLIENT_URL")},
-			AllowCredentials: true,
-			AllowMethods:     []string{"PUT", "PATCH", "GET", "DELETE"},
-			AllowHeaders:     []string{"Origin", "content-type"}}))
-	}
+	a.Router.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{os.Getenv("CLIENT_URL")},
+		AllowCredentials: true,
+		AllowMethods:     []string{"PUT", "PATCH", "GET", "DELETE"},
+		AllowHeaders:     []string{"Origin", "content-type"},
+	}))
 
-	api := a.Router.Group("/api")
-	api.GET("/endpoints", a.getEndpoints)
-	api.POST("/endpoint", a.createEndpoint)
-	api.GET("/endpoint/:id", a.getEndpoint)
-	api.PUT("/endpoint/:id", a.updateEndpoint)
-	api.DELETE("/endpoint/:id", a.deleteEndpoint)
-	api.GET("/public/:url", a.getClientContent)
-
-	if os.Getenv("ENVIRONMENT") == "production" {
-		a.Router.LoadHTMLGlob("../application/build/*.html")
-		a.Router.LoadHTMLFiles("../application/build/static")
-		a.Router.Static("/static", "../application/build/static")
-		a.Router.StaticFile("/", "../application/build/index.html")
-	}
+	a.Router.GET("/endpoints", a.getEndpoints)
+	a.Router.POST("/endpoint", a.createEndpoint)
+	a.Router.GET("/endpoint/:id", a.getEndpoint)
+	a.Router.PUT("/endpoint/:id", a.updateEndpoint)
+	a.Router.DELETE("/endpoint/:id", a.deleteEndpoint)
+	a.Router.GET("/public/:url", a.getClientContent)
 }
 
 // Initialize ...
