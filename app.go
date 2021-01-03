@@ -146,7 +146,7 @@ func (a *App) initializeRoutes() {
 	a.Router.GET("/endpoint/:id", a.getEndpoint)
 	a.Router.PUT("/endpoint/:id", a.updateEndpoint)
 	a.Router.DELETE("/endpoint/:id", a.deleteEndpoint)
-	a.Router.GET("/public/:url", a.getClientContent)
+	a.Router.GET("/temp/:url", a.getClientContent)
 }
 
 // Initialize ...
