@@ -1,5 +1,5 @@
 # [Tiny API](https://tiny-api.dev) - A Tiny API To Make Tiny APIs
-![Website Preview](https://github.com/cameronhh/tiny-api/blob/master/.github/repo-image.png)
+![Website Preview](https://github.com/cameronhh/tiny-api-client/blob/master/.github/repo-image.png)
 
 - *Quickly prototyping some front-end code and need a couple of endpoints to return some static JSON?*
 - *Perhaps you're integrating a front-end with a back-end that doesn't have a test server?*
