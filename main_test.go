@@ -1,6 +1,7 @@
 package main
 
 import (
+	"io/ioutil"
 	"log"
 	"os"
 	"testing"
@@ -16,34 +17,45 @@ var a App
 
 func TestMain(m *testing.M) {
 	a.Initialize(os.Getenv("DB_CONNECTION"))
-
 	ensureTableExists()
+	clearTables()
 	code := m.Run()
-	clearTable()
+	clearTables()
 	os.Exit(code)
 }
 
+func executeSQLFromFile(filepath string) error {
+	sqlBytes, err := ioutil.ReadFile(filepath)
+
+	if err != nil {
+		return err
+	}
+
+	if _, err := a.DB.Exec(string(sqlBytes)); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func ensureTableExists() {
-	if _, err := a.DB.Exec(tableCreationQuery); err != nil {
+	err := executeSQLFromFile("./db/populateTables.sql")
+
+	if err != nil {
 		log.Fatal(err)
 	}
 }
 
-func clearTable() {
-	a.DB.Exec("DELETE FROM endpoints")
-	a.DB.Exec("ALTER SEQUENCE endpoints_id_seq RESTART WITH 1")
+func clearTables() {
+	err := executeSQLFromFile("./db/clearTables.sql")
+
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
-const tableCreationQuery = `CREATE TABLE IF NOT EXISTS endpoints
-(
-    id SERIAL,
-    url TEXT NOT NULL,
-		content TEXT NOT NULL DEFAULT 0.00,
-		CONSTRAINT endpoints_pkey PRIMARY KEY (id)
-)`
-
 func TestEmptyTable(t *testing.T) {
-	clearTable()
+	clearTables()
 
 	req, _ := http.NewRequest("GET", "/endpoints", nil)
 	response := executeRequest(req)
@@ -69,7 +81,7 @@ func checkResponseCode(t *testing.T, expected, actual int) {
 }
 
 func TestGetNonExistentEndpoint(t *testing.T) {
-	clearTable()
+	clearTables()
 
 	req, _ := http.NewRequest("GET", "/endpoint/11", nil)
 	response := executeRequest(req)
@@ -78,7 +90,7 @@ func TestGetNonExistentEndpoint(t *testing.T) {
 }
 
 func TestCreateEndpoint(t *testing.T) {
-	clearTable()
+	clearTables()
 
 	var jsonStr = []byte(`{"url":"testendpoint", "content": "{}"}`)
 	req, _ := http.NewRequest("POST", "/endpoint", bytes.NewBuffer(jsonStr))
@@ -106,7 +118,7 @@ func TestCreateEndpoint(t *testing.T) {
 }
 
 func TestGetEndpoint(t *testing.T) {
-	clearTable()
+	clearTables()
 	addEndpoints(1)
 
 	req, _ := http.NewRequest("GET", "/endpoint/1", nil)
@@ -114,8 +126,6 @@ func TestGetEndpoint(t *testing.T) {
 
 	checkResponseCode(t, http.StatusOK, response.Code)
 }
-
-// main_test.go
 
 func addEndpoints(count int) {
 	if count < 1 {
@@ -128,12 +138,12 @@ func addEndpoints(count int) {
 }
 
 func TestUpdateEndpoint(t *testing.T) {
-
-	clearTable()
+	clearTables()
 	addEndpoints(1)
 
 	req, _ := http.NewRequest("GET", "/endpoint/1", nil)
 	response := executeRequest(req)
+
 	var originalEndpoint map[string]interface{}
 	json.Unmarshal(response.Body.Bytes(), &originalEndpoint)
 
@@ -162,7 +172,7 @@ func TestUpdateEndpoint(t *testing.T) {
 }
 
 func TestDeleteEndpoint(t *testing.T) {
-	clearTable()
+	clearTables()
 	addEndpoints(1)
 
 	req, _ := http.NewRequest("GET", "/endpoint/1", nil)
