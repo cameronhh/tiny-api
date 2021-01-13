@@ -81,6 +81,12 @@ func (a *App) createEndpoint(c *gin.Context) {
 
 	if c.ShouldBind(&e) != nil {
 		c.String(http.StatusBadRequest, "Invalid request body")
+		return
+	}
+
+	if !e.isValidURL() {
+		c.String(http.StatusBadRequest, "Invalid URL")
+		return
 	}
 
 	err := e.createEndpoint(a.DB)

@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"net/url"
 )
 
 type endpoint struct {
@@ -10,34 +11,43 @@ type endpoint struct {
 	Content string `json:"content"`
 }
 
-func (p *endpoint) getEndpoint(db *sql.DB) error {
+func (e *endpoint) isValidURL() bool {
+	// only URL safe chars are allowed in the endpoint so we
+	// escape and unescape the endpoint url and verify that all are the same
+	escapedURL := url.PathEscape(e.URL)
+	unescapedURL, err := url.PathUnescape(e.URL)
+
+	return err == nil && escapedURL == unescapedURL
+}
+
+func (e *endpoint) getEndpoint(db *sql.DB) error {
 	return db.QueryRow("SELECT url, content FROM endpoints WHERE id=$1",
-		p.ID).Scan(&p.URL, &p.Content)
+		e.ID).Scan(&e.URL, &e.Content)
 }
 
-func (p *endpoint) getEndpointByURL(db *sql.DB) error {
+func (e *endpoint) getEndpointByURL(db *sql.DB) error {
 	return db.QueryRow("SELECT id, url, content FROM endpoints WHERE url=$1",
-		p.URL).Scan(&p.ID, &p.URL, &p.Content)
+		e.URL).Scan(&e.ID, &e.URL, &e.Content)
 }
 
-func (p *endpoint) updateEndpoint(db *sql.DB) error {
+func (e *endpoint) updateEndpoint(db *sql.DB) error {
 	_, err :=
 		db.Exec("UPDATE endpoints SET url=$1, content=$2 WHERE id=$3",
-			p.URL, p.Content, p.ID)
+			e.URL, e.Content, e.ID)
 
 	return err
 }
 
-func (p *endpoint) deleteEndpoint(db *sql.DB) error {
-	_, err := db.Exec("DELETE FROM endpoints WHERE id=$1", p.ID)
+func (e *endpoint) deleteEndpoint(db *sql.DB) error {
+	_, err := db.Exec("DELETE FROM endpoints WHERE id=$1", e.ID)
 
 	return err
 }
 
-func (p *endpoint) createEndpoint(db *sql.DB) error {
+func (e *endpoint) createEndpoint(db *sql.DB) error {
 	err := db.QueryRow(
 		"INSERT INTO endpoints(url, content) VALUES($1, $2) RETURNING id",
-		p.URL, p.Content).Scan(&p.ID)
+		e.URL, e.Content).Scan(&e.ID)
 
 	if err != nil {
 		return err

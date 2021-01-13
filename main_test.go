@@ -117,6 +117,17 @@ func TestCreateEndpoint(t *testing.T) {
 	}
 }
 
+func TestCreateUnsafeEndpoint(t *testing.T) {
+	clearTables()
+
+	var jsonStr = []byte(`{"url":" some uns@fe url chars", "content": "{}"}`)
+	req, _ := http.NewRequest("POST", "/endpoint", bytes.NewBuffer(jsonStr))
+	req.Header.Set("Content-Type", "application/json")
+
+	response := executeRequest(req)
+	checkResponseCode(t, http.StatusBadRequest, response.Code)
+}
+
 func TestGetEndpoint(t *testing.T) {
 	clearTables()
 	addEndpoints(1)
