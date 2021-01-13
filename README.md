@@ -61,9 +61,9 @@ go run .
 
 ## Things To Do:
 
-- Allow only URL safe characters to be used for temp endpoints
+- ~~Allow only URL safe characters to be used for temp endpoints~~
 - Add an endpoint to check if a new temp endpoint already exists or not
 - Remove (or at least comment out) endpoints that are unused
-- Improve the tests
-- Write a database script for bootstrapping the tables
+- Improve the directory structure (tests in particular)
+- ~~Write a database script for bootstrapping the tables~~
 - Add an expiry for temp endpoints, and a helpful response message once those endpoints are hit after expiring
