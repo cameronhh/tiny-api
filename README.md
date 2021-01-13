@@ -7,7 +7,8 @@
 - **_Make an endpoint that returns static JSON in seconds with [Tiny API](https://tiny-api.dev)_**
 
 This repo is the server behind [https://tiny-api.dev](https://tiny-api.dev). The Tiny API Server is a REST API written in Go using [Gin](https://github.com/gin-gonic/gin).
-The code for the front end can be found [here](https://github.com/cameronhh/tiny-api-client).
+
+***The code for the front end can be found [here](https://github.com/cameronhh/tiny-api-client).***
 
 ## Setting up the development environment
 
