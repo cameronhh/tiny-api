@@ -18,10 +18,10 @@ You can quickly run a test database with docker using the following command.
 
 ```
 docker run -d -p 5432:5432 \
---name tiny-api-dbms \
--e POSTGRES_USER=postgres \
+--name tiny-api-postgres \
+-e POSTGRES_USER=dev \    
 -e POSTGRES_PASSWORD=mysecretpassword \
--e POSTGRES_DB=tiny-api-db \
+-e POSTGRES_DB=tiny-api-dev \
 postgres
 ```
 
@@ -31,9 +31,9 @@ Running the server requires the following environment variables to be set:
 
 ```
 DB_HOSTNAME=localhost
-DB_USERNAME=postgres
+DB_USERNAME=dev
 DB_PASSWORD=mysecretpassword
-DB_NAME=tiny-api-db
+DB_NAME=tiny-api-dev
 GIN_ENV=development
 CLIENT_URL=http://localhost:3000
 ```
