@@ -3,7 +3,6 @@ package main
 import (
 	"database/sql"
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -150,10 +149,7 @@ func (a *App) initializeRoutes() {
 }
 
 // Initialize ...
-func (a *App) Initialize(host, user, password, dbname string) {
-	connectionString :=
-		fmt.Sprintf("host=%s user=%s port=5432 password=%s dbname=%s sslmode=disable", host, user, password, dbname)
-
+func (a *App) Initialize(connectionString string) {
 	var err error
 	a.DB, err = sql.Open("postgres", connectionString)
 	if err != nil {

@@ -15,12 +15,7 @@ import (
 var a App
 
 func TestMain(m *testing.M) {
-	a.Initialize(
-		os.Getenv("DB_HOSTNAME"),
-		os.Getenv("DB_USERNAME"),
-		os.Getenv("DB_PASSWORD"),
-		os.Getenv("DB_NAME"),
-	)
+	a.Initialize(os.Getenv("DB_CONNECTION"))
 
 	ensureTableExists()
 	code := m.Run()
