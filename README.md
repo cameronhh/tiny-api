@@ -36,6 +36,7 @@ DB_PASSWORD=mysecretpassword
 DB_NAME=tiny-api-dev
 GIN_ENV=development
 CLIENT_URL=http://localhost:3000
+PORT=8080
 ```
 
 To simplify things, create a `.env` and then run:
