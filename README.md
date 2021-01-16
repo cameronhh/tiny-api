@@ -13,7 +13,7 @@ This repo is the server behind [https://tiny-api.dev](https://tiny-api.dev). The
 
 ## Setting up the development environment
 
-### 1. Start the test database
+### 1. Start a development database
 
 Tiny API is built on top of Postgres (I know, SQLite would have been tinier).
 You can quickly run a test database with docker using the following command.
