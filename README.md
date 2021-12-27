@@ -1,3 +1,5 @@
+**_This project is no longer active._**
+
 # [Tiny API](https://tiny-api.dev) - A Tiny API To Make Tiny APIs
 
 ![Website Preview](https://github.com/cameronhh/tiny-api-client/blob/master/.github/repo-image.png)
